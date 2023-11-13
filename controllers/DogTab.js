@@ -23,46 +23,6 @@ module.exports.dogtabsGET = function dogtabsGET (req, res, next) {
     });
 };
 
-module.exports.dogtabsOwnDogTabIDDELETE = function dogtabsOwnDogTabIDDELETE (req, res, next, dogTabID) {
-  DogTab.dogtabsOwnDogTabIDDELETE(dogTabID)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
-};
-
-module.exports.dogtabsOwnDogTabIDPUT = function dogtabsOwnDogTabIDPUT (req, res, next, body, dogTabID) {
-  DogTab.dogtabsOwnDogTabIDPUT(body, dogTabID)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
-};
-
-module.exports.dogtabsOwnDogTabIDPUT = function dogtabsOwnDogTabIDPUT (req, res, next, body, dogTabID) {
-  DogTab.dogtabsOwnDogTabIDPUT(body, dogTabID)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
-};
-
-module.exports.dogtabsOwnGET = function dogtabsOwnGET (req, res, next) {
-  DogTab.dogtabsOwnGET()
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
-};
-
 module.exports.dogtabsPOST = function dogtabsPOST (req, res, next, body) {
   DogTab.dogtabsPOST(body)
     .then(function (response) {

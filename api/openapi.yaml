@@ -170,102 +170,6 @@ paths:
         "404":
           description: DogTab not found
       x-swagger-router-controller: DogTab
-  /dogtabs/own:
-    get:
-      tags:
-      - DogTab
-      summary: View all personal/own DogTabs
-      description: FR2 - The logged-in user must be able edit the dog tabs they already
-        created.  <br> FR3 - The logged-in user must be able to see all the posted
-        dog tabs. <br>
-      operationId: dogtabsOwnGET
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/dogTabsView'
-                x-content-type: application/json
-            application/xml:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/dogTabsView'
-            application/x-www-form-urlencoded:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/dogTabsView'
-      x-swagger-router-controller: DogTab
-  /dogtabs/own/{dogTabID}:
-    put:
-      tags:
-      - DogTab
-      summary: Edit own DogTab by ID
-      description: FR2 - The logged-in user must be able edit the dog tabs they already
-        created. <br>
-      operationId: dogtabsOwnDogTabIDPUT
-      parameters:
-      - name: dogTabID
-        in: path
-        description: Dog tab's ID to edit
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-          format: int64
-      requestBody:
-        description: Information needed to edit a DogTab
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/dogTabsEdit'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/dogTabsEdit'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/dogTabsEdit'
-        required: true
-      responses:
-        "200":
-          description: Successful DogTab edit
-        "400":
-          description: Invalid or missing input fields or ID
-        "404":
-          description: DogTab not found
-        "415":
-          description: Invalid image types
-      x-swagger-router-controller: DogTab
-    delete:
-      tags:
-      - DogTab
-      summary: Delete own DogTab by ID
-      description: FR2 - The logged-in user must be able edit the dog tabs they already
-        created.  <br>
-      operationId: dogtabsOwnDogTabIDDELETE
-      parameters:
-      - name: dogTabID
-        in: path
-        description: Dog tab's ID to delete
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-          format: int64
-      responses:
-        "200":
-          description: Successful DogTab deletion
-        "400":
-          description: Invalid or missing input ID
-        "404":
-          description: DogTab not found
-      x-swagger-router-controller: DogTab
   /dogtabs/saved:
     get:
       tags:
@@ -474,72 +378,6 @@ paths:
         "400":
           description: Invalid or missing input IDs or empty body
       x-swagger-router-controller: Message
-  /notifications:
-    get:
-      tags:
-      - Notification
-      summary: View all own notifications
-      description: FR6 - The notifications' system must notify the logged-in when
-        the status of a dog tab in the interest list changes.  <br>
-      operationId: notificationsGET
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/notification'
-                x-content-type: application/json
-            application/xml:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/notification'
-            application/x-www-form-urlencoded:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/notification'
-      x-swagger-router-controller: Notification
-    delete:
-      tags:
-      - Notification
-      summary: Clear all own notifications
-      description: FR6 - The notifications' system must notify the logged-in when
-        the status of a dog tab in the interest list changes.  <br>
-      operationId: notificationsDELETE
-      responses:
-        "200":
-          description: Successful operation
-      x-swagger-router-controller: Notification
-  /notifications/{notificationID}:
-    delete:
-      tags:
-      - Notification
-      summary: Clear own notification by ID
-      description: FR6 - The notifications' system must notify the logged-in when
-        the status of a dog tab in the interest list changes.  <br>
-      operationId: notificationsNotificationIDDELETE
-      parameters:
-      - name: notificationID
-        in: path
-        description: Notification's ID to get cleared
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-          format: int64
-      responses:
-        "200":
-          description: Successful operation
-        "400":
-          description: Invalid input notification ID
-        "404":
-          description: Notification not found
-      x-swagger-router-controller: Notification
   /feedback:
     post:
       tags:
@@ -643,42 +481,6 @@ components:
         - ""
         birthDate: 2000-01-23T04:56:07.000+00:00
         breed: Bulldog
-    dogTabsEdit:
-      type: object
-      properties:
-        dogTabID:
-          type: integer
-          format: int64
-          example: 1234567
-        name:
-          type: string
-          example: Rex
-        breed:
-          type: string
-          example: Bulldog
-        sex:
-          type: string
-          example: Male
-        mainPhoto:
-          type: string
-          format: byte
-        otherPhotos:
-          type: array
-          items:
-            type: string
-            format: byte
-        birthDate:
-          type: string
-          format: date-time
-        description:
-          type: string
-          example: Rex seeks a home
-        location:
-          type: string
-          example: "Thessaloniki, Greece"
-        isAdopted:
-          type: boolean
-          example: true
     conversation:
       type: object
       properties:
@@ -721,24 +523,6 @@ components:
         content:
           type: string
           example: When can we meet up?
-    notification:
-      type: object
-      properties:
-        dogTabID:
-          type: integer
-          format: int64
-          example: 1234567
-        isAdopted:
-          type: boolean
-          example: true
-        notificationID:
-          type: integer
-          format: int64
-          example: 1234567
-      example:
-        isAdopted: true
-        notificationID: 1234567
-        dogTabID: 1234567
     feedback:
       type: object
       properties:
