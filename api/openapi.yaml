@@ -3,9 +3,6 @@ info:
   title: Dog It! API
   description: This is the Dog It! application API specifications
   version: 1.0.0
-servers:
-- url: https://virtserver.swaggerhub.com/FOTISALEXANDRIDIS200/dog-it_api/1.0.0
-  description: SwaggerHub API Auto Mocking
 tags:
 - name: DogTab
   description: All actions on dog tabs
