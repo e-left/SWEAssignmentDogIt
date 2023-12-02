@@ -46,17 +46,53 @@ test("GET all user conversations", async t => {
 });
 
 test("GET all messages from specific conversation about specific DogTab by function", async t => {
-    t.pass();
+    // get call conversations    
+    const result = await conversationsToUserIDDogTabIDGET();
+    // assert that we get two entries 
+    t.is(result.length, 2);
+    // get the first one
+    const firstConversation = result[0];
+    // check IDs and message
+    t.is(firstConversation.content, "When can we meet up?");
+    t.is(firstConversation.toUserID, 1234567);
+    t.is(firstConversation.fromUserID, 1234567);
 });
 
 test("GET all messages from specific conversation about specific DogTab", async t => {
-    t.pass();
+    // make get request to mock server
+    const { body, statusCode } = await t.context.got("conversations/1234567/1234567");
+    // assert success status code
+    t.is(statusCode, 200);
+    // assert that we get two messages 
+    t.is(body.length, 2);
+    // get the first one
+    const firstConversation = body[0];
+    // check IDs and message
+    t.is(firstConversation.content, "When can we meet up?");
+    t.is(firstConversation.toUserID, 1234567);
+    t.is(firstConversation.fromUserID, 1234567);
 });
 
 test("POST new message to specific user to specific conversation by function", async t => {
-    t.pass();
+    // define parameters
+    const fromUserID = 1234567;
+    const toUserID = 1234567;
+    const body = {"content": "Is this still available?"};
+    // try to create message
+    try {
+        await conversationsToUserIDDogTabIDPOST(body, toUserID, fromUserID);
+        t.pass();
+    } catch (e) {
+        // catch error
+        t.fail(e);
+    }
 });
 
 test("POST new message to specific user to specific conversation", async t => {
-    t.pass();
+    // define parameters
+    const fromUserID = 1234567;
+    const toUserID = 1234567;
+    const body = {"content": "Is this still available?"};
+    const {statusCode} = await t.context.got.post(`conversations/${toUserID}/${fromUserID}`, {json: body});
+    t.is(statusCode, 200);
 });
