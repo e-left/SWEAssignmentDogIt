@@ -32,13 +32,3 @@ module.exports.conversationsToUserIDDogTabIDPOST = function conversationsToUserI
       utils.writeJson(res, response);
     });
 };
-
-module.exports.conversationsToUserIDDogTabIDPOST = function conversationsToUserIDDogTabIDPOST (req, res, next, body, toUserID, dogTabID) {
-  Message.conversationsToUserIDDogTabIDPOST(body, toUserID, dogTabID)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
-};
