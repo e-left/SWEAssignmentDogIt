@@ -3,52 +3,60 @@ const test = require('ava');
 const listen = require('test-listen');
 const got = require('got');
 
+const app = require('../index.js');
 
-// const { booksGET } = require('../service/DefaultService.js');
-// const app = require('../index.js');
+const { conversationsGET, conversationsToUserIDDogTabIDGET, conversationsToUserIDDogTabIDPOST } = require("../service/MessageService.js")
 
-test('Random test', t => {
+test.before(async (t) => {
+    t.context.server = http.createServer(app);
+    t.context.prefixUrl = await listen(t.context.server);
+    t.context.got = got.extend({ prefixUrl: t.context.prefixUrl, responseType: 'json' });
+});
+
+test.after.always((t) => {
+    t.context.server.close();
+});
+
+test("GET all user conversations by function", async t => {
+    // get call conversations    
+    const result = await conversationsGET();
+    // assert that we get two entries 
+    t.is(result.length, 2);
+    // get the first one
+    const firstConversation = result[0];
+    // check IDs and message
+    t.is(firstConversation.preview, "Is the dog still available for adoption?");
+    t.is(firstConversation.toUserID, 1234567);
+    t.is(firstConversation.dogTabID, 1234567);
+});
+
+test("GET all user conversations", async t => {
+    // make get request to mock server
+    const { body, statusCode } = await t.context.got("conversations");
+    // assert success status code
+    t.is(statusCode, 200);
+    // assert that we get two messages 
+    t.is(body.length, 2);
+    // get the first one
+    const firstConversation = body[0];
+    // check IDs and message
+    t.is(firstConversation.preview, "Is the dog still available for adoption?");
+    t.is(firstConversation.toUserID, 1234567);
+    t.is(firstConversation.dogTabID, 1234567);
+});
+
+test("GET all messages from specific conversation about specific DogTab by function", async t => {
     t.pass();
 });
 
-const addNumbers = (a,b) => a + b;
-
-test('Add numbers', t => {
-    t.is(addNumbers(1,2), 3);
-    t.is(addNumbers(3,5), 8);
-    t.is(addNumbers(-1,2), 1);
-    t.is(addNumbers(0,0), 0);
-    t.is(addNumbers(0,2), 2);
-    t.is(addNumbers("1", "2"), "12");
-    t.is(addNumbers("1", 2), "12");
-    t.is(addNumbers(undefined, 2), NaN);
-    t.is(addNumbers(), NaN);
+test("GET all messages from specific conversation about specific DogTab", async t => {
+    t.pass();
 });
 
-test('Async', async t => {
-    const res = Promise.resolve('test');
-    t.is(await res, 'test');
+test("POST new message to specific user to specific conversation by function", async t => {
+    t.pass();
 });
 
-// test('GET books by function', async t => {
-//     const result = await booksGET();
-//     t.is(result.length, 2);
-//     t.is(result[0].title, "title");
-// });
-
-// test.before(async (t) => {
-//     t.context.server = http.createServer(app);
-//     t.context.prefixUrl = await listen(t.context.server);
-//     t.context.got = got.extend({ prefixUrl: t.context.prefixUrl, responseType: 'json' });
-// });
-
-// test.after.always((t) => {
-//     t.context.server.close();
-// });
-
-// test('GET books', async (t) => {
-//     const { body, statusCode } = await t.context.got("books");
-//     t.is(body.length, 2);
-//     t.is(body[0].title, 'title');
-//     t.is(statusCode, 200);
-// });
+test("POST new message to specific user to specific conversation", async t => {
+    t.pass();
+});
