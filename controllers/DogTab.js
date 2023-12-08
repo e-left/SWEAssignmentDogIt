@@ -33,16 +33,6 @@ module.exports.dogtabsPOST = function dogtabsPOST (req, res, next, body) {
     });
 };
 
-module.exports.dogtabsPOST = function dogtabsPOST (req, res, next, body) {
-  DogTab.dogtabsPOST(body)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
-};
-
 module.exports.dogtabsSavedDogTabIDDELETE = function dogtabsSavedDogTabIDDELETE (req, res, next, dogTabID) {
   DogTab.dogtabsSavedDogTabIDDELETE(dogTabID)
     .then(function (response) {
