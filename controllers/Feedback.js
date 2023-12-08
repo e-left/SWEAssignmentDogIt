@@ -12,13 +12,3 @@ module.exports.feedbackPOST = function feedbackPOST (req, res, next, body) {
       utils.writeJson(res, response);
     });
 };
-
-module.exports.feedbackPOST = function feedbackPOST (req, res, next, body) {
-  Feedback.feedbackPOST(body)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
-};
