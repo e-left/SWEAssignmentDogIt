@@ -40,6 +40,6 @@ test("POST new feedback to developers by function", async t => {
 test("POST new feedback to developers", async t => {
     // define parameters
     body = {"content": "I have found a bug!"};
-    const response = await t.context.got.post(`feedback`, {json: body});
-    t.is(response.statusCode, 200);
+    const { statusCode } = await t.context.got.post(`feedback`, {json: body});
+    t.is(statusCode, 200);
 });
