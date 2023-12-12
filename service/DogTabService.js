@@ -83,21 +83,6 @@ exports.dogtabsPOST = function(body) {
   });
 }
 
-
-/**
- * Create new DogTab
- * FR1 - The logged-in user must be able to create a new dog tab, to put a dog up for adoption.  <br>
- *
- * body DogTabsCreate Information needed to create a DogTab (optional)
- * no response value expected for this operation
- **/
-exports.dogtabsPOST = function(body) {
-  return new Promise(function(resolve, reject) {
-    resolve();
-  });
-}
-
-
 /**
  * Remove DogTab (by ID) from own saved/interest list
  * FR5 - The logged-in user must be able to manage a personal interest list for dog tabs.  <br>
