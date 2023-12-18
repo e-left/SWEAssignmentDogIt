@@ -19,10 +19,10 @@ test.after.always((t) => {
     t.context.server.close();
 });
 
-test("GET posted dog tab by ID by function", async t => {
+test("GET posted DogTab by ID by function", async t => {
     // define parameters
     const id = 1234567;
-    // get posted dog tab by ID
+    // get posted DogTab by ID
     const result = await dogtabsDogTabIDGET(id);
     // check some dogtab characteristics
     t.is(result.sex, "Male");
@@ -32,7 +32,7 @@ test("GET posted dog tab by ID by function", async t => {
     t.is(result.breed, "Bulldog");
 });
 
-test("GET posted dog tab by ID", async t => {
+test("GET posted DogTab by ID", async t => {
     // define parameters
     const id = 1234567;
     const { body, statusCode } = await t.context.got(`dogtabs/${id}`);
@@ -47,7 +47,7 @@ test("GET posted dog tab by ID", async t => {
 });
 
 
-test("GET all posted dog tabs by function", async t => {
+test("GET all posted DogTabs by function", async t => {
     //get all dogtabs
     const result = await dogtabsGET();
     // assert that we get two entries 
@@ -62,7 +62,7 @@ test("GET all posted dog tabs by function", async t => {
     t.is(firstDogtab.breed, "Bulldog");
 });
 
-test("GET all posted dog tabs", async t => {
+test("GET all posted DogTabs", async t => {
     const { body, statusCode } = await t.context.got("dogtabs");
     // assert success status code
     t.is(statusCode, 200);
@@ -78,7 +78,7 @@ test("GET all posted dog tabs", async t => {
     t.is(firstDogtab.breed, "Bulldog");
 });
 
-test("POST new Dogtab by function", async t => {
+test("POST new DogTab by function", async t => {
     // define parameters
     const body = {
         "name": "Rex",
@@ -102,7 +102,7 @@ test("POST new Dogtab by function", async t => {
     }
 });
 
-test("POST new Dogtab", async t => {
+test("POST new DogTab", async t => {
     // define parameters
     const body = {
         "name": "Rex",
@@ -118,4 +118,22 @@ test("POST new Dogtab", async t => {
     };
     const { statusCode } = await t.context.got.post(`dogtabs`, {json: body});
     t.is(statusCode, 200);
+});
+
+test("GET DogTabs by filters by function", async t => {
+    // define parameters
+    const sex = "Male";
+    const breed = "Bulldog";
+    const ageRange = "1m0y - 0m10y";
+    const location = "Thessaloniki";
+    // get all filtered DogTabs
+    const result = await dogtabsSexBreedAgeRangeLocationGET(sex, breed, ageRange, location);
+    // assert that we get two entries 
+    t.is(result.length, 2);
+    // get the first one    
+    const firstDogtab = result[0];
+    // check some dogtab characteristics
+    t.is(firstDogtab.sex, "Male");
+    t.is(firstDogtab.location, "Thessaloniki, Greece");
+    t.is(firstDogtab.breed, "Bulldog");
 });
