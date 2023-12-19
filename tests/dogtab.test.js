@@ -123,7 +123,7 @@ test("POST new DogTab", async t => {
 test("DELETE DogTab from own interest list by ID by function", async t => {
     // define parameters
     const id = 1234567;
-    //try to add DogTab in interest list
+    //try to delete DogTab from interest list
     try {
         await dogtabsSavedDogTabIDDELETE(id);
         t.pass();
@@ -132,6 +132,27 @@ test("DELETE DogTab from own interest list by ID by function", async t => {
     catch(e){
         t.fail(e);
     }
+});
+
+test("DELETE DogTab from own interest list by ID", async t => {
+    // define parameters
+    const id = 1234567;
+    const body = {
+        "name": "Rex",
+        "breed": "Bulldog",
+        "sex": "Male",
+        "mainPhoto": "",
+        "otherPhotos": [
+          ""
+        ],
+        "birthDate": "2023-12-12T11:37:48.6182Z",
+        "description": "Rex seeks a home",
+        "location": "Thessaloniki, Greece"
+    };
+    //try to delete DogTab from interest list
+    const { statusCode } = await t.context.got.delete(`dogtabs/saved/${id}`, {json: body});
+    //check we got desired status code
+    t.is(statusCode, 200);
 });
 
 test("PUT DogTab into own interest list by ID by function", async t => {
@@ -165,6 +186,7 @@ test("PUT DogTab into own interest list by ID", async t => {
     };
     //try to add DogTab in interest list
     const { statusCode } = await t.context.got.put(`dogtabs/saved/${id}`, {json: body});
+    //check we got desired status code
     t.is(statusCode, 200);
 });
 
