@@ -148,6 +148,26 @@ test("PUT DogTab into own interest list by ID by function", async t => {
     }
 });
 
+test("PUT DogTab into own interest list by ID", async t => {
+    // define parameters
+    const id = 1234567;
+    const body = {
+        "name": "Rex",
+        "breed": "Bulldog",
+        "sex": "Male",
+        "mainPhoto": "",
+        "otherPhotos": [
+          ""
+        ],
+        "birthDate": "2023-12-12T11:37:48.6182Z",
+        "description": "Rex seeks a home",
+        "location": "Thessaloniki, Greece"
+    };
+    //try to add DogTab in interest list
+    const { statusCode } = await t.context.got.put(`dogtabs/saved/${id}`, {json: body});
+    t.is(statusCode, 200);
+});
+
 test("GET all saved DogTabs by function", async t => {
     // get all saved DogTabs
     const result = await dogtabsSavedGET();
