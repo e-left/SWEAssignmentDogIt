@@ -120,7 +120,7 @@ test("POST new DogTab", async t => {
     t.is(statusCode, 200);
 });
 
-test("GET all saved DogTabs", async t => {
+test("GET all saved DogTabs by function", async t => {
     // get all saved DogTabs
     const result = await dogtabsSavedGET();
     // assert that we get two entries 
