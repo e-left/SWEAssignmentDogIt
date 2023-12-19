@@ -77,7 +77,7 @@ test("POST new message to specific user to specific conversation by function", a
     // define parameters
     const fromUserID = 1234567;
     const toUserID = 1234567;
-    const body = {"content": "Is this still available?"};
+    const body = { "content": "Is this still available?" };
     // try to create message
     try {
         await conversationsToUserIDDogTabIDPOST(body, toUserID, fromUserID);
@@ -92,7 +92,60 @@ test("POST new message to specific user to specific conversation", async t => {
     // define parameters
     const fromUserID = 1234567;
     const toUserID = 1234567;
-    const body = {"content": "Is this still available?"};
-    const {statusCode} = await t.context.got.post(`conversations/${toUserID}/${fromUserID}`, {json: body});
+    const body = { "content": "Is this still available?" };
+    const { statusCode } = await t.context.got.post(`conversations/${toUserID}/${fromUserID}`, { json: body });
     t.is(statusCode, 200);
+});
+
+test("Assure POST new message fails with an empty body", async t => {
+    // define parameters
+    const fromUserID = 1234567;
+    const toUserID = 1234567;
+    const error = await t.throwsAsync(async () => {
+        await t.context.got.post(`conversations/${toUserID}/${fromUserID}`); // do not include body here
+    });
+    t.is(error.response.statusCode, 415);
+    t.is(error.response.body.message, "unsupported media type undefined");
+});
+
+test("Assure POST new message fails with non integer IDs", async t => {
+    // define parameters
+    let fromUserID = "Hello";
+    let toUserID = 1234567;
+    const body = { "content": "Is this still available?" };
+    let error = await t.throwsAsync(async () => {
+        await t.context.got.post(`conversations/${toUserID}/${fromUserID}`, { json: body });
+    });
+    t.is(error.response.statusCode, 400);
+    t.is(error.response.body.message, "request.params.dogTabID should be integer");
+
+    fromUserID = 1234567;
+    toUserID = "Hello";
+    error = await t.throwsAsync(async () => {
+        await t.context.got.post(`conversations/${toUserID}/${fromUserID}`, { json: body });
+    });
+    t.is(error.response.statusCode, 400);
+    t.is(error.response.body.message, "request.params.toUserID should be integer");
+
+    fromUserID = "Goodbye";
+    toUserID = "Hello";
+    error = await t.throwsAsync(async () => {
+        await t.context.got.post(`conversations/${toUserID}/${fromUserID}`, { json: body });
+    });
+    t.is(error.response.statusCode, 400);
+    t.is(error.response.body.message, "request.params.toUserID should be integer, request.params.dogTabID should be integer");
+});
+
+test("Assure POST new message fails with wrong body parameter type", async t => {
+    // define parameters
+    const fromUserID = 1234567;
+    const toUserID = 1234567;
+    const bodyExamples = [{ "content": true }, { "content": 5 }];
+    for(let body of bodyExamples) {
+        let error = await t.throwsAsync(async () => {
+            await t.context.got.post(`conversations/${toUserID}/${fromUserID}`, { json: body });
+        });
+        t.is(error.response.statusCode, 400);
+        t.is(error.response.body.message, "request.body.content should be string");
+    }
 });
