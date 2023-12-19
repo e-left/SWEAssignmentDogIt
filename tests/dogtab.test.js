@@ -163,6 +163,23 @@ test("GET all saved DogTabs by function", async t => {
     t.is(firstDogtab.breed, "Bulldog");
 });
 
+test("GET all saved DogTabs", async t => {
+    // make get request to mock server
+    const { body, statusCode } = await t.context.got(`dogtabs/saved`);
+    // assert success status code
+    t.is(statusCode, 200);
+    // assert that we get two messages 
+    t.is(body.length, 2);
+    // get the first one
+    const firstDogTab = body[0];
+    // check some dogtab characteristics
+    t.is(firstDogTab.sex, "Male");
+    t.is(firstDogTab.name, "Rex");
+    t.is(firstDogTab.description, "Rex seeks a home");
+    t.is(firstDogTab.location, "Thessaloniki, Greece");
+    t.is(firstDogTab.breed, "Bulldog");
+});
+
 test("GET DogTabs by filters by function", async t => {
     // define parameters
     const sex = "Male";
