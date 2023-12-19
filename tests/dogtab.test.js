@@ -120,6 +120,20 @@ test("POST new DogTab", async t => {
     t.is(statusCode, 200);
 });
 
+test("PUT DogTab into own interest list by function", async t => {
+    // define parameters
+    const id = 1234567;
+    //try to add DogTab in interest list
+    try {
+        await dogtabsSavedDogTabIDPUT(id);
+        t.pass();
+    } 
+    // catch error
+    catch(e){
+        t.fail(e);
+    }
+});
+
 test("GET all saved DogTabs by function", async t => {
     // get all saved DogTabs
     const result = await dogtabsSavedGET();
