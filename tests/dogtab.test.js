@@ -120,6 +120,21 @@ test("POST new DogTab", async t => {
     t.is(statusCode, 200);
 });
 
+test("GET all saved DogTabs", async t => {
+    // get all saved DogTabs
+    const result = await dogtabsSavedGET();
+    // assert that we get two entries 
+    t.is(result.length, 2);
+    // get the first one
+    const firstDogtab = result[0];
+    // check some dogtab characteristics
+    t.is(firstDogtab.sex, "Male");
+    t.is(firstDogtab.name, "Rex");
+    t.is(firstDogtab.description, "Rex seeks a home");
+    t.is(firstDogtab.location, "Thessaloniki, Greece");
+    t.is(firstDogtab.breed, "Bulldog");
+});
+
 test("GET DogTabs by filters by function", async t => {
     // define parameters
     const sex = "Male";
@@ -137,3 +152,6 @@ test("GET DogTabs by filters by function", async t => {
     t.is(firstDogtab.location, "Thessaloniki, Greece");
     t.is(firstDogtab.breed, "Bulldog");
 });
+
+
+
