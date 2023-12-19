@@ -168,7 +168,7 @@ test("GET all saved DogTabs", async t => {
     const { body, statusCode } = await t.context.got(`dogtabs/saved`);
     // assert success status code
     t.is(statusCode, 200);
-    // assert that we get two messages 
+    // assert that we get two entries 
     t.is(body.length, 2);
     // get the first one
     const firstDogTab = body[0];
@@ -198,5 +198,23 @@ test("GET DogTabs by filters by function", async t => {
     t.is(firstDogtab.breed, "Bulldog");
 });
 
-
+test("GET DogTabs by filters", async t => {
+    // define parameters
+    const sex = "Male";
+    const breed = "Bulldog";
+    const ageRange = "1m0y - 0m10y";
+    const location = "Thessaloniki";
+    // make get request to mock server
+    const { body, statusCode } = await t.context.got(`dogtabs/${sex}/${breed}/${ageRange}/${location}`);
+    // assert success status code
+    t.is(statusCode, 200);
+    // assert that we get two entries 
+    t.is(body.length, 2);
+    // get the first one
+    const firstDogTab = body[0];
+    // check some dogtab characteristics
+    t.is(firstDogTab.sex, "Male");
+    t.is(firstDogTab.location, "Thessaloniki, Greece");
+    t.is(firstDogTab.breed, "Bulldog");
+});
 
