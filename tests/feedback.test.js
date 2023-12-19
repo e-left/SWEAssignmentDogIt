@@ -19,7 +19,7 @@ test.after.always((t) => {
 
 // Function to generate feedback body with variable content
 function generateFeedback(content) {
-    return {"content": content};
+    return { "content": content };
 }
 
 test("POST new feedback to developers by function", async t => {
@@ -39,7 +39,15 @@ test("POST new feedback to developers by function", async t => {
 
 test("POST new feedback to developers", async t => {
     // define parameters
-    body = {"content": "I have found a bug!"};
-    const { statusCode } = await t.context.got.post(`feedback`, {json: body});
+    body = { "content": "I have found a bug!" };
+    const { statusCode } = await t.context.got.post(`feedback`, { json: body });
     t.is(statusCode, 200);
+});
+
+test("Assure POST new feedback fails with an empty body", async t => {
+    const error = await t.throwsAsync(async () => {
+        await t.context.got.post(`feedback`); // do not include body here
+    });
+    t.is(error.response.statusCode, 415);
+    t.is(error.response.body.message, "unsupported media type undefined");
 });

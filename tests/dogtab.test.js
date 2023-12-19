@@ -46,6 +46,15 @@ test("GET posted DogTab by ID", async t => {
     t.is(body.breed, "Bulldog");
 });
 
+test("Assure GET posted DogTab by ID fails with non integer IDs", async t => {
+    // define parameters
+    const id = "Hello";
+    let error = await t.throwsAsync(async () => {
+        await await t.context.got(`dogtabs/${id}`);
+    });
+    t.is(error.response.statusCode, 400);
+    t.is(error.response.body.message, "request.params.dogTabID should be integer");
+});
 
 test("GET all posted DogTabs by function", async t => {
     //get all dogtabs
@@ -120,6 +129,35 @@ test("POST new DogTab", async t => {
     t.is(statusCode, 200);
 });
 
+test("Assure POST new DogTab fails with empty body", async t => {
+    let error = await t.throwsAsync(async () => {
+        await await await t.context.got.post(`dogtabs`);
+    });
+    t.is(error.response.statusCode, 415);
+    t.is(error.response.body.message, "unsupported media type undefined");
+});
+
+test("Assure POST new DogTab fails with wrong body", async t => {
+    // define parameters
+    const body = {
+        "name": 5,
+        "breed": false,
+        "sex": "Male",
+        "mainPhoto": "",
+        "otherPhotos": [
+          ""
+        ],
+        "birthDate": "2023-12-12T11:37:48.6182Z",
+        "description": "Rex seeks a home",
+        "location": "Thessaloniki, Greece"
+    };
+    let error = await t.throwsAsync(async () => {
+        await await await t.context.got.post(`dogtabs`, {json: body});
+    });
+    t.is(error.response.statusCode, 400);
+    t.is(error.response.body.message, "request.body.name should be string, request.body.breed should be string");
+});
+
 test("DELETE DogTab from own interest list by ID by function", async t => {
     // define parameters
     const id = 1234567;
@@ -137,22 +175,20 @@ test("DELETE DogTab from own interest list by ID by function", async t => {
 test("DELETE DogTab from own interest list by ID", async t => {
     // define parameters
     const id = 1234567;
-    const body = {
-        "name": "Rex",
-        "breed": "Bulldog",
-        "sex": "Male",
-        "mainPhoto": "",
-        "otherPhotos": [
-          ""
-        ],
-        "birthDate": "2023-12-12T11:37:48.6182Z",
-        "description": "Rex seeks a home",
-        "location": "Thessaloniki, Greece"
-    };
     //try to delete DogTab from interest list
-    const { statusCode } = await t.context.got.delete(`dogtabs/saved/${id}`, {json: body});
+    const { statusCode } = await t.context.got.delete(`dogtabs/saved/${id}`);
     //check we got desired status code
     t.is(statusCode, 200);
+});
+
+test("Assure DELETE DogTab from own interest list by ID fails with non integer IDs", async t => {
+    // define parameters
+    const id = "Hello";
+    let error = await t.throwsAsync(async () => {
+        await await t.context.got.delete(`dogtabs/saved/${id}`);
+    });
+    t.is(error.response.statusCode, 400);
+    t.is(error.response.body.message, "request.params.dogTabID should be integer");
 });
 
 test("PUT DogTab into own interest list by ID by function", async t => {
@@ -172,22 +208,20 @@ test("PUT DogTab into own interest list by ID by function", async t => {
 test("PUT DogTab into own interest list by ID", async t => {
     // define parameters
     const id = 1234567;
-    const body = {
-        "name": "Rex",
-        "breed": "Bulldog",
-        "sex": "Male",
-        "mainPhoto": "",
-        "otherPhotos": [
-          ""
-        ],
-        "birthDate": "2023-12-12T11:37:48.6182Z",
-        "description": "Rex seeks a home",
-        "location": "Thessaloniki, Greece"
-    };
     //try to add DogTab in interest list
-    const { statusCode } = await t.context.got.put(`dogtabs/saved/${id}`, {json: body});
+    const { statusCode } = await t.context.got.put(`dogtabs/saved/${id}`);
     //check we got desired status code
     t.is(statusCode, 200);
+});
+
+test("Assure PUT DogTab into own interest list by ID fails with non integer IDs", async t => {
+    // define parameters
+    const id = "Hello";
+    let error = await t.throwsAsync(async () => {
+        await await t.context.got.put(`dogtabs/saved/${id}`);
+    });
+    t.is(error.response.statusCode, 400);
+    t.is(error.response.body.message, "request.params.dogTabID should be integer");
 });
 
 test("GET all saved DogTabs by function", async t => {
@@ -259,4 +293,3 @@ test("GET DogTabs by filters", async t => {
     t.is(firstDogTab.location, "Thessaloniki, Greece");
     t.is(firstDogTab.breed, "Bulldog");
 });
-
