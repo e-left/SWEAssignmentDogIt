@@ -120,7 +120,21 @@ test("POST new DogTab", async t => {
     t.is(statusCode, 200);
 });
 
-test("PUT DogTab into own interest list by function", async t => {
+test("DELETE DogTab from own interest list by ID by function", async t => {
+    // define parameters
+    const id = 1234567;
+    //try to add DogTab in interest list
+    try {
+        await dogtabsSavedDogTabIDDELETE(id);
+        t.pass();
+    } 
+    // catch error
+    catch(e){
+        t.fail(e);
+    }
+});
+
+test("PUT DogTab into own interest list by ID by function", async t => {
     // define parameters
     const id = 1234567;
     //try to add DogTab in interest list
