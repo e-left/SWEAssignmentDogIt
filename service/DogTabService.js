@@ -1,5 +1,19 @@
 'use strict';
 
+//helper function to generate example data
+function generateExampleData() {
+  return {
+    "sex": "Male",
+    "name": "Rex",
+    "mainPhoto": "",
+    "description": "Rex seeks a home",
+    "location": "Thessaloniki, Greece",
+    "dogTabID": 1234567,
+    "otherPhotos": ["", ""],
+    "birthDate": "2000-01-23T04:56:07.000+00:00",
+    "breed": "Bulldog"
+  };
+}
 
 /**
  * View DogTab by ID
@@ -11,17 +25,7 @@
 exports.dogtabsDogTabIDGET = function(dogTabID) {
   return new Promise(function(resolve, reject) {
     var examples = {};
-    examples['application/json'] = {
-  "sex" : "Male",
-  "name" : "Rex",
-  "mainPhoto" : "",
-  "description" : "Rex seeks a home",
-  "location" : "Thessaloniki, Greece",
-  "dogTabID" : 1234567,
-  "otherPhotos" : [ "", "" ],
-  "birthDate" : "2000-01-23T04:56:07.000+00:00",
-  "breed" : "Bulldog"
-};
+    examples['application/json'] = generateExampleData();
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
@@ -40,27 +44,7 @@ exports.dogtabsDogTabIDGET = function(dogTabID) {
 exports.dogtabsGET = function() {
   return new Promise(function(resolve, reject) {
     var examples = {};
-    examples['application/json'] = [ {
-  "sex" : "Male",
-  "name" : "Rex",
-  "mainPhoto" : "",
-  "description" : "Rex seeks a home",
-  "location" : "Thessaloniki, Greece",
-  "dogTabID" : 1234567,
-  "otherPhotos" : [ "", "" ],
-  "birthDate" : "2000-01-23T04:56:07.000+00:00",
-  "breed" : "Bulldog"
-}, {
-  "sex" : "Male",
-  "name" : "Rex",
-  "mainPhoto" : "",
-  "description" : "Rex seeks a home",
-  "location" : "Thessaloniki, Greece",
-  "dogTabID" : 1234567,
-  "otherPhotos" : [ "", "" ],
-  "birthDate" : "2000-01-23T04:56:07.000+00:00",
-  "breed" : "Bulldog"
-} ];
+    examples['application/json'] = [generateExampleData(), generateExampleData()];
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
@@ -120,27 +104,7 @@ exports.dogtabsSavedDogTabIDPUT = function(dogTabID) {
 exports.dogtabsSavedGET = function() {
   return new Promise(function(resolve, reject) {
     var examples = {};
-    examples['application/json'] = [ {
-  "sex" : "Male",
-  "name" : "Rex",
-  "mainPhoto" : "",
-  "description" : "Rex seeks a home",
-  "location" : "Thessaloniki, Greece",
-  "dogTabID" : 1234567,
-  "otherPhotos" : [ "", "" ],
-  "birthDate" : "2000-01-23T04:56:07.000+00:00",
-  "breed" : "Bulldog"
-}, {
-  "sex" : "Male",
-  "name" : "Rex",
-  "mainPhoto" : "",
-  "description" : "Rex seeks a home",
-  "location" : "Thessaloniki, Greece",
-  "dogTabID" : 1234567,
-  "otherPhotos" : [ "", "" ],
-  "birthDate" : "2000-01-23T04:56:07.000+00:00",
-  "breed" : "Bulldog"
-} ];
+    examples['application/json'] = [generateExampleData(), generateExampleData()];
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
@@ -163,27 +127,7 @@ exports.dogtabsSavedGET = function() {
 exports.dogtabsSexBreedAgeRangeLocationGET = function(sex,breed,ageRange,location) {
   return new Promise(function(resolve, reject) {
     var examples = {};
-    examples['application/json'] = [ {
-  "sex" : "Male",
-  "name" : "Rex",
-  "mainPhoto" : "",
-  "description" : "Rex seeks a home",
-  "location" : "Thessaloniki, Greece",
-  "dogTabID" : 1234567,
-  "otherPhotos" : [ "", "" ],
-  "birthDate" : "2000-01-23T04:56:07.000+00:00",
-  "breed" : "Bulldog"
-}, {
-  "sex" : "Male",
-  "name" : "Rex",
-  "mainPhoto" : "",
-  "description" : "Rex seeks a home",
-  "location" : "Thessaloniki, Greece",
-  "dogTabID" : 1234567,
-  "otherPhotos" : [ "", "" ],
-  "birthDate" : "2000-01-23T04:56:07.000+00:00",
-  "breed" : "Bulldog"
-} ];
+    examples['application/json'] = [generateExampleData(), generateExampleData()];
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
@@ -191,4 +135,3 @@ exports.dogtabsSexBreedAgeRangeLocationGET = function(sex,breed,ageRange,locatio
     }
   });
 }
-
