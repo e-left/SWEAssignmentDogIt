@@ -1,51 +1,47 @@
-//initialisation function for ResponsePayload
-var ResponsePayload = function(code, payload) {
+// Initialization function for ResponsePayload
+function ResponsePayload(code, payload) {
   this.code = code;
   this.payload = payload;
 }
 
-//exporting function for ResponsePayload
+// Exporting function for ResponsePayload
 exports.respondWithCode = function(code, payload) {
   return new ResponsePayload(code, payload);
-}
+};
 
-//function that returns json payload
-var writeJson = exports.writeJson = function(response, arg1, arg2) {
+// Function that returns JSON payload
+exports.writeJson = function(response, arg1, arg2) {
   //define variables
-  var code;
-  var payload;
+  let code = getCode(arg1, arg2);
+  let payload = getPayload(arg1, arg2);
 
-  //check if arg1 exists and is a ResponsePayload object
-  //if yes, call function with response and destructured ResponsePayload object
-  if(arg1 && arg1 instanceof ResponsePayload) {
-    writeJson(response, arg1.payload, arg1.code);
-    return;
-  }
-
-  //check which is code and which is payload
-  if(arg2 && Number.isInteger(arg2)) {
-    code = arg2;
-  }
-  else {
-    if(arg1 && Number.isInteger(arg1)) {
-      code = arg1;
-    }
-  }
-  if(code && arg1) {
-    payload = arg1;
-  }
-  else if(arg1) {
-    payload = arg1;
-  }
-
-  if(!code) {
-    // if no response code given, we default to 200
-    code = 200;
-  }
-  if(typeof payload === 'object') {
-    //if isn't string, make it string
+  //if it isn't string, make it string
+  if (typeof payload !== 'string') {
     payload = JSON.stringify(payload, null, 2);
   }
-  response.writeHead(code, {'Content-Type': 'application/json'});
+
+  response.writeHead(code, { 'Content-Type': 'application/json' });
   response.end(payload);
+};
+
+//helper function to get the response code
+function getCode(arg1, arg2) {
+  if (arg1 instanceof ResponsePayload) {
+    return arg1.code;
+  } else if (Number.isInteger(arg1)) {
+    return arg1;
+  } else if (Number.isInteger(arg2)) {
+    return arg2;
+  }
+
+  return 200; //default to 200 if no code is provided
+}
+
+//helper function to get the payload
+function getPayload(arg1, arg2) {
+  if (arg1 instanceof ResponsePayload) {
+    return arg1.payload;
+  } else {
+    return arg1 || arg2; //use arg1 if available, otherwise use arg2
+  }
 }
