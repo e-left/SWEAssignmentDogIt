@@ -124,7 +124,7 @@ exports.dogtabsSavedGET = function() {
  * location String Location filter
  * returns List
  **/
-exports.dogtabsSexBreedAgeRangeLocationGET = function(sex,breed,ageRange,location) {
+exports.dogtabsSexBreedAgeRangeLocationGET = function() {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = [generateExampleData(), generateExampleData()];
