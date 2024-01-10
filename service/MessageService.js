@@ -35,7 +35,7 @@ exports.conversationsGET = function() {
  * dogTabID Long Dog tab's ID conversation is about
  * returns List
  **/
-exports.conversationsToUserIDDogTabIDGET = function(toUserID,dogTabID) {
+exports.conversationsToUserIDDogTabIDGET = function() {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = [ {
@@ -65,7 +65,7 @@ exports.conversationsToUserIDDogTabIDGET = function(toUserID,dogTabID) {
  * dogTabID Long Dog tab's ID conversation is about
  * no response value expected for this operation
  **/
-exports.conversationsToUserIDDogTabIDPOST = function(body,toUserID,dogTabID) {
+exports.conversationsToUserIDDogTabIDPOST = function() {
   return new Promise(function(resolve, reject) {
     resolve();
   });

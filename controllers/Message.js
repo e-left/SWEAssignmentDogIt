@@ -16,9 +16,9 @@ module.exports.conversationsGET = function conversationsGET (req, res, next) {
 };
 
 //function that returns all messages from a specific conversation about a specific DogTab
-module.exports.conversationsToUserIDDogTabIDGET = function conversationsToUserIDDogTabIDGET (req, res, next, toUserID, dogTabID) {
+module.exports.conversationsToUserIDDogTabIDGET = function conversationsToUserIDDogTabIDGET (req, res, next) {
   //call service method
-  Message.conversationsToUserIDDogTabIDGET(toUserID, dogTabID)
+  Message.conversationsToUserIDDogTabIDGET()
     .then(function (response) {
       utils.writeJson(res, response);
     })
@@ -28,9 +28,9 @@ module.exports.conversationsToUserIDDogTabIDGET = function conversationsToUserID
 };
 
 //function that creates a new message to a specific user in a specific conversation
-module.exports.conversationsToUserIDDogTabIDPOST = function conversationsToUserIDDogTabIDPOST (req, res, next, body, toUserID, dogTabID) {
+module.exports.conversationsToUserIDDogTabIDPOST = function conversationsToUserIDDogTabIDPOST (req, res, next) {
   //call service method
-  Message.conversationsToUserIDDogTabIDPOST(body, toUserID, dogTabID)
+  Message.conversationsToUserIDDogTabIDPOST()
     .then(function (response) {
       utils.writeJson(res, response);
     })

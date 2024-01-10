@@ -76,9 +76,9 @@ module.exports.dogtabsSavedGET = function dogtabsSavedGET (req, res, next) {
 };
 
 //function that returns filtered DogTabs
-module.exports.dogtabsSexBreedAgeRangeLocationGET = function dogtabsSexBreedAgeRangeLocationGET (req, res, next, sex, breed, ageRange, location) {
+module.exports.dogtabsSexBreedAgeRangeLocationGET = function dogtabsSexBreedAgeRangeLocationGET (req, res, next) {
   //call service method
-  DogTab.dogtabsSexBreedAgeRangeLocationGET(sex, breed, ageRange, location)
+  DogTab.dogtabsSexBreedAgeRangeLocationGET()
     .then(function (response) {
       utils.writeJson(res, response);
     })
